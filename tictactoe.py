@@ -85,7 +85,6 @@ def one_col(grid, player):
     return 0
 
 
-
 def check_winner(grid, player):
     """ 
     Si grid correspond à une configuration gagnante
@@ -97,11 +96,8 @@ def check_winner(grid, player):
             one_diag(grid, player)
 
 
-def all_values(grid):
-    return [grid[r][c] for r in range(3) for c in range(3)]
-
 def full(grid):
-    return EMPTY not in all_values(grid) 
+    return all(grid[r][c] != EMPTY for r in range(3) for c in range(3)) 
 
 def check_end(grid, winner):
     return winner or full(grid)
