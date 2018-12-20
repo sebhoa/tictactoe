@@ -20,7 +20,7 @@ Mais commençons par décrire un peu notre modèle de jeu.
 
 Le jeu se joue sur une grille de 3x3 :
 
-![Début de partie de TicTacToe](/Figs/ex_interface.png)
+![Début de partie de TicTacToe](/Figs/ex_interface_2.png)
 
 Nous allons utiliser une liste de listes pour modéliser cela, avec trois valeurs possible pour chaque élément des listes intérieures :
 
