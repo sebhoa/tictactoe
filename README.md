@@ -385,9 +385,10 @@ Le principal inconvénient de cette version, me semble-t-il : l'utilisation de f
 
 Je vous mets donc la version objet ici : [tictactoe_oo.py][3]
 
+Enfin, je n'ai pas du tout parlé des fonctions pour faire jouer la machine. Ce sera pour un article complet car il y a beaucoup à dire. Dans le code actuel (version non objet) j'ai codé un algorithme qui teste toutes les combinaisons et mémorise le meilleur coup possible (algorithme [negamax][4]). Cela est possible avec le TicTacToe parce que le jeu est petit ; avec un vrai jeu il faut mettre en place des techniques pour élaguer l'arbre de recherche beaucoup trop volumineux.
 
 [1]:https://fr.wikipedia.org/wiki/Mod%C3%A8le-vue-contr%C3%B4leur
 [2]:/tictactoe/tictactoe.py
 [3]:/tictactoe/tictactoe_oo.py
-
+[4]:https://en.wikipedia.org/wiki/Negamax
 
