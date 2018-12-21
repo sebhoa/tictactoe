@@ -135,19 +135,17 @@ Voici le squelette du déroulé du script :
 
 1. Au lancement, page d'accueil avec choix de joueurs :
 
-![Etape 00](/Figs/etape_00.png)
-
+    ![Etape 00](/Figs/etape_00.png)
 2. L'utilisateur fait son choix en appuyant sur une des touches 1, 2, 3 ou 4 et on passe alors au deuxième écran :
 
-![Etape 01](/Figs/etape_01.png)
-
+    ![Etape 01](/Figs/etape_01.png)
 3. A partir de là on entre dans la boucle de jeu qui consiste en :
     1. Récupérer un coup 
     2. Valider ce coup et le jouer
     3. Mettre à jour la vue
     4. Recommencer en 1. jusqu'à ce que la partie soit terminée
 
-![Etape 02](/Figs/etape_02.png)
+    ![Etape 02](/Figs/etape_02.png)
 
 Avant de présenter nos différentes fonctions de contrôleur, listons un peu ce dont nous aurons besoin pour la suite en termes de données et donc de variables à initialiser et qui seront à passer en paramètres à nos diverses fonctions. 
 
