@@ -110,7 +110,12 @@ def empty_cells(grid):
     return [(r,c) for r in range(3) for c in range(3)
                 if grid[r][c] == EMPTY]
 
-def faible(grid, players, player):
+def faible(grid, player):
+    """
+    Stratégie minimaliste : si un coup gagnant on 
+    le joue, sinon, si un coup perdant on joue
+    à cet endroit pour bloquer, sinon au hasard
+    """
     copie = [grid[row].copy() for row in range(3)]
     for r, c in empty_cells(grid):
         copie[r][c] = player
@@ -125,8 +130,45 @@ def faible(grid, players, player):
         copie[r][c] = EMPTY
     return random.choice(empty_cells(grid))
 
-def choice(grid, players, player):
-    return faible(grid, players, player)
+
+def negamax(grid, player):
+    """
+    Calcule le meilleur score pour le joueur courant
+    Au TicTacToe, on va pouvoir explorer toutes les
+    configurations et retourner le vrai score des configurations
+    finales : 1 si le joueur gagne, -1 s'il perd et 0 pour un nul
+    """
+    winner = check_winner(grid, player)
+    if winner == player:
+        return 1
+    elif winner == 3 - player:
+        return -1
+    elif full(grid):
+        return 0
+    else:
+        bestScore = -10
+        for r, c in empty_cells(grid):
+            grid2 = [grid[row].copy() for row in range(3)]
+            grid2[r][c] = player 
+            score = -negamax(grid2, 3 - player)
+            if score > bestScore:
+                 bestScore = score
+        return bestScore
+
+
+def choice(grid, player):
+    # return faible(grid, player)
+    bestScore = -10
+    bestPos = None, None
+    for r, c in empty_cells(grid):
+        grid2 = [grid[row].copy() for row in range(3)]
+        grid2[r][c] = player
+        score = -negamax(grid2, 3 - player)
+        if score > bestScore:
+            bestScore = score
+            bestPos = r, c
+    return bestPos
+
 
 # ---------------------------------
 # LA VUE
@@ -327,7 +369,7 @@ def play(view, msg, grid, players, player, winner, gameover):
         annonce_player(msg, player)
     else:
         time.sleep(1) # juste pour voir le jeu qd il s'agit de 2 machines
-        row, col = choice(grid, players, player) # l'IA
+        row, col = choice(grid, player) # l'IA
         gameloop(view, msg, row, col, grid, players, player, gameover) 
 
 
