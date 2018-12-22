@@ -141,8 +141,6 @@ def negamax(grid, player):
     winner = check_winner(grid, player)
     if winner == player:
         return 1
-    elif winner == 3 - player:
-        return -1
     elif full(grid):
         return 0
     else:
@@ -159,15 +157,17 @@ def negamax(grid, player):
 def choice(grid, player):
     # return faible(grid, player)
     bestScore = -10
-    bestPos = None, None
+    l_bestPos = []
     for r, c in empty_cells(grid):
         grid2 = [grid[row].copy() for row in range(3)]
         grid2[r][c] = player
         score = -negamax(grid2, 3 - player)
         if score > bestScore:
             bestScore = score
-            bestPos = r, c
-    return bestPos
+            bestPos = [(r, c)]
+        elif score == bestScore:
+            bestPos.append((r,c))
+    return random.choice(bestPos)
 
 
 # ---------------------------------
@@ -368,7 +368,7 @@ def play(view, msg, grid, players, player, winner, gameover):
         unblock_click(view, msg, grid, players, player, gameover)
         annonce_player(msg, player)
     else:
-        time.sleep(1) # juste pour voir le jeu qd il s'agit de 2 machines
+        annonce(msg, 'Je réfléchis...')
         row, col = choice(grid, player) # l'IA
         gameloop(view, msg, row, col, grid, players, player, gameover) 
 
