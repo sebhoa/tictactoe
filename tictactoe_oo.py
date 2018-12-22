@@ -206,11 +206,56 @@ class GameModel:
     def valid_move(self, row, col):
         return self.grid[row][col] == GameModel.EMPTY
 
+    def empty_cells(self):
+        return {(r,c) for r in range(3) for c in range(3) 
+                        if self.grid[r][c] == GameModel.EMPTY}
+
+    def negamax(self):
+        """
+        Calcule le meilleur score pour le joueur courant
+        Au TicTacToe, on va pouvoir explorer toutes les
+        configurations et retourner le vrai score des configurations
+        finales : 1 si le joueur gagne, -1 s'il perd et 0 pour un nul
+        """
+        if self.check_winner():
+            return 1
+        elif self.full():
+            return 0
+        else:
+            bestScore = -10
+            for r, c in self.empty_cells():
+                self.grid[r][c] = self.player
+                self.next_player() 
+                score = -self.negamax()
+                if score > bestScore:
+                     bestScore = score
+                self.grid[r][c] = GameModel.EMPTY
+                self.next_player()
+            return bestScore
+
+
     def choice(self):
-        """ La machine joue au hasard pour l'instant """
-        candidats = [(row, col) for row in range(3) for col in range(3)
-                        if self.valid_move(row, col)]
-        return random.choice(candidats)
+        # return faible(grid, player)
+        bestScore = -10
+        l_bestPos = []
+        for r, c in self.empty_cells():
+            self.grid[r][c] = self.player
+            self.next_player() 
+            score = -self.negamax()
+            if score > bestScore:
+                bestScore = score
+                bestPos = [(r, c)]
+            elif score == bestScore:
+                bestPos.append((r,c))
+            self.grid[r][c] = GameModel.EMPTY
+            self.next_player() 
+        return random.choice(bestPos)
+
+    # def choice(self):
+    #     """ La machine joue au hasard pour l'instant """
+    #     candidats = [(row, col) for row in range(3) for col in range(3)
+    #                     if self.valid_move(row, col)]
+    #     return random.choice(candidats)
 
     def next_player(self):
         self.player = 3 - self.player
